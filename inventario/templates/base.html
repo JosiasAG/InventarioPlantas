@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <ul>
+            <li>
+                <a href = '/'><p>Inicio</p></a>
+            </li>
+            {% if user.is_authenticated %}
+            
+            <li>
+                <a href = '/inventario/'><p>Registrar producto</p></a>
+            </li>
+            <li>
+                <a href = '/agregar_producto/'><p>Comprar producto</p></a>
+            </li>
+            <li>
+                <a href = '/vender_producto/'><p>Vender producto</p></a>
+            </li>
+            <li>
+                <a href = '/buscar/'><p>Buscar</p></a>
+            </li>
+            <li>
+                <a href = '/salir/'><p>Salir</p></a>
+            </li>
+            {% else %}
+            <li>
+                <a href = '/registro/'><p>Registrarse</p></a>
+            </li>
+            <li>
+                <a href = '/ingreso/'><p>Ingresar</p></a>
+            </li>
+            {% endif %}
+            
+        </ul>
+        {% block content %}
+        {% endblock content %}
+    </body>
+</html>

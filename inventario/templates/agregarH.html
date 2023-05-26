@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        {% block content %}
+        <h1>Añadir producto</h1>
+        <form action='/agregar_producto/' method='POST'>
+            {% csrf_token %}
+            <p>No. Factura: {{agregar.bill}}</p>
+            <p>Articulo: {{agregar.code}}</p>
+            <p>Cantidad: {{agregar.quantityIncoming}}</p>
+            <p>Costo total: {{agregar.unit_price}}</p>
+        <button type='submit'>Registrar</button>
+        </form>
+
+        {% endblock content %}
+    </body>
+</html>
