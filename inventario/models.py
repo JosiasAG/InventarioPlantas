@@ -25,7 +25,7 @@ class productsModel(models.Model):
     summatory = models.IntegerField('Existencias')
     
     def __str__(self):
-        return str(self.pk) + ' - ' + self.product + ' - ' + self.category 
+        return str(self.pk) + ' - ' + self.product
     
     def save(self, *args, **kwargs):
         incoming_products = incomingProducts.objects.filter(code=self)

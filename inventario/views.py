@@ -13,6 +13,15 @@ from django.contrib.auth import views as views_auth
 
 
 def inicio(request):
+    agregar = productsModel.objects.filter(product = 'Pata de Vaca')
+    if not agregar.exists():
+        producto = productsModel.objects.create(
+            product = 'Pata de Vaca',
+            description = 'También llamado árbol de las orquídeas, y de nombre científico Bauhinia variegata, se trata de un árbol de hoja caduca que puede alcanzar alturas de hasta 10 metros. Dado su tamaño moderado, es uno de los árboles ornamentales más populares en jardines pequeños. Tiene hojas largas dispuestas de forma alterna y sus flores, rosas o blancas, guardan gran parecido con las de las orquídeas.',
+            category = 0,
+            initial_stock = 25,
+        )
+        producto.save()
     return render(request, 'inicioH.html')
 
 
@@ -186,6 +195,20 @@ def venderProducto(request):
     if request.method == 'GET':
         return render(request,'eliminarH.html', {'eliminar': outcomingForm})
     else:
+        
+        # este fragmento de código crea una venta vacía si no existe para que no se rompa la continuidad de facturas
+        agregar2 = productsModel.objects.get(product = 'Pata de Vaca')
+        buscar = outcomingProducts.objects.all()
+        if not buscar.exists():
+            guardar2 = outcomingProducts.objects.create(
+                bill = '0',
+                quantityOutcoming = 0,
+                unit_price = 0,
+                code = agregar2
+            )
+            print(guardar2)
+            guardar2.save()
+        
         agregar = productsModel.objects.get(id = request.POST['code'])
         verificar = outcomingProducts.objects.aggregate(verificar = Max('bill'))
         if verificar is not None: 
@@ -203,6 +226,7 @@ def venderProducto(request):
         )
             agregar.save()
             guardar.save()
+            print(guardar.code)
             return render(request,'eliminarH.html', {'eliminar': outcomingForm})
         else:
             return render(request,'eliminarH.html', {'eliminar': outcomingForm, 'error': f'Stock insuficiente para venta, existen {agregar.summatory} pieza(s)'})
