@@ -1,5 +1,15 @@
 from django.forms import ModelForm
 from . import models
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+
+class userForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+    
+
+
 
 class inventarioForms(ModelForm):
     class Meta:
@@ -13,14 +23,13 @@ class inventarioForms(ModelForm):
 class incomingForm(ModelForm):
     class Meta:
         model = models.incomingProducts
-        fields = ['bill', 'code', 'quantityIncoming','unit_price']
+        fields = ['supplier', 'name', 'address', 'telephone', 'email', 'bill', 'code', 'quantityIncoming','unit_price']
         verbose_name = 'ModelName'
-        verbose_name_plural = 'ModelNames'
-        
+        verbose_name_plural = 'ModelNames'      
 
 class outcomingForm(ModelForm):
     class Meta:
         model = models.outcomingProducts
-        fields = ['bill', 'code', 'quantityOutcoming', 'unit_price']
+        fields = ['code', 'quantityOutcoming', 'unit_price']
         verbose_name = 'ModelName'
         verbose_name_plural = 'ModelNames'

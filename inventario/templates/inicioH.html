@@ -1,17 +1,25 @@
 {% extends 'base.html' %}
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Inicio</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Inicio</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="container">
         {% block content %}
-        <h1>Bienvenido al Sistema de Gestión de Inventario Regional "SiGIR"</h1>
+        <h1 style="text-align: left; color: #333; font-size: 40px; margin: 50px 100px;">
+            Bienvenido al Sistema de Gestión de Inventario
+            </h1>
+            <h1 style="text-align: left; color: #333; font-size: 50px; margin: 50px 100px;">
+                "Vivero: La señora de las plantas"
+                </h1>
+
+            
         {% endblock content %}
-    </body>
+      </div>    
+</body>
 </html>

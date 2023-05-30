@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect
-from .forms import inventarioForms, incomingForm, outcomingForm
+from .forms import inventarioForms, incomingForm, outcomingForm, userForm
 from .models import productsModel, incomingProducts, outcomingProducts
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import get_object_or_404
 from datetime import datetime
-from django.views.decorators.cache import never_cache
+from django.db.models import Max
+from django.contrib.auth import views as views_auth
 
 
 def inicio(request):
@@ -17,23 +18,26 @@ def inicio(request):
 
 def registrar(request):
     if request.method == 'GET':
-        return render(request, 'registroH.html', {'registro': UserCreationForm})
+        return render(request, 'registroH.html', {'registro': userForm})
     else:
         if len(request.POST['username'])>0 and len(request.POST['password1'])>0:
             if request.POST['password1'] == request.POST['password2']:
                 try:
                     user = User.objects.create_user(
                         username = request.POST['username'],
-                        password = request.POST['password1']
+                        first_name = request.POST['first_name'],
+                        last_name = request.POST['last_name'],
+                        email = request.POST['email'],
+                        password = request.POST['password1'],
                     )
                     user.save()
                     return redirect('ingreso')
                 except IntegrityError:
-                    return render(request, 'registroH.html', {'registro': UserCreationForm, 'error': 'El usuario ya existe'})
+                    return render(request, 'registroH.html', {'registro': userForm, 'error': 'El usuario ya existe'})
             else:
-                return render(request, 'registroH.html', {'registro': UserCreationForm, 'error': 'Las contraseñas no coinciden'})
+                return render(request, 'registroH.html', {'registro': userForm, 'error': 'Las contraseñas no coinciden'})
         else:
-            return render(request, 'registroH.html', {'registro': UserCreationForm})
+            return render(request, 'registroH.html', {'registro': userForm})
 
 
 def ingresar(request):
@@ -70,8 +74,6 @@ def inventarioP(request):
         return render(request, 'inventario.html', {'inventario': inventarioForms})
 
 
-
-
     
 @login_required
 def busqueda(request):
@@ -89,7 +91,7 @@ def consultar(request, Nconsulta):
     else:
         return redirect('editar_producto')
 
-
+@login_required
 def editarProducto(request, Nconsulta):
     obtain = get_object_or_404(productsModel, id = Nconsulta)
     edit = inventarioForms(instance=obtain)
@@ -114,12 +116,19 @@ def agregarProducto(request):
         agregar = productsModel.objects.get(id = request.POST['code'])
         guardar = incomingProducts.objects.create(
             code = agregar,
+            supplier = request.POST['supplier'],
+            name = request.POST['name'],
+            address = request.POST['address'],
+            telephone = request.POST['telephone'],
+            email = request.POST['email'],
             bill = request.POST['bill'],
             quantityIncoming = request.POST['quantityIncoming'],
+            unit_price = request.POST['unit_price'],
         )
         agregar.save()
         guardar.save()
         return render(request,'agregarH.html', {'agregar': incomingForm})
+
 
 @login_required    
 def eliminarProducto(request, Nconsulta):
@@ -128,6 +137,48 @@ def eliminarProducto(request, Nconsulta):
         obtain.delete()
         return redirect('buscar')
     return redirect('buscar')
+
+
+@login_required
+def buscarCompra(request):
+    if request.method == 'GET':
+        return render(request, 'buscarCompraH.html')
+    else:
+        find = incomingProducts.objects.all().filter(bill__icontains=request.POST['bill'])
+        return render(request, 'buscarCompraH.html',{'resultado': find})
+
+
+@login_required
+def consultarCompra(request, Nconsulta):
+    if request.method == 'GET': 
+        obtain = get_object_or_404(incomingProducts, id = Nconsulta)
+        return render(request, 'consultaCompraH.html', {'consulta': obtain})
+    else:
+        return redirect('editar_producto')
+
+@login_required
+def editarCompra(request, Nconsulta):
+    obtain = get_object_or_404(incomingProducts, id = Nconsulta)
+    edit = incomingForm(instance=obtain)
+    
+    if request.method == 'POST':
+        form = incomingForm(request.POST, instance=obtain)
+        if form.is_valid():
+            form.save()
+            return redirect('consultar_compra', Nconsulta=Nconsulta)
+        return render(request, 'editarCompraH.html', {'edicion': edit, 'clave': Nconsulta})
+    else:
+        form = incomingForm(instance=obtain)
+    return render(request, 'editarCompraH.html', {'edicion': edit, 'clave': Nconsulta}) 
+
+
+@login_required    
+def eliminarCompra(request, Nconsulta):
+    if request.method == 'POST':
+        obtain = get_object_or_404(incomingProducts, id = Nconsulta)
+        obtain.delete()
+        return redirect('buscar_compra')
+    return redirect('buscar_compra')
         
     
 @login_required
@@ -136,10 +187,17 @@ def venderProducto(request):
         return render(request,'eliminarH.html', {'eliminar': outcomingForm})
     else:
         agregar = productsModel.objects.get(id = request.POST['code'])
+        verificar = outcomingProducts.objects.aggregate(verificar = Max('bill'))
+        if verificar is not None: 
+            verificar = int(verificar['verificar']) + 1
+            joint = str(verificar).zfill(8)
+        else:
+            verificar = int(verificar['verificar']) + 1
+            joint = str(verificar).zfill(8)
         if agregar.summatory >= int(request.POST['quantityOutcoming']):
             guardar = outcomingProducts.objects.create(
                 code = agregar,
-                bill = request.POST['bill'],
+                bill = joint,
                 quantityOutcoming = request.POST['quantityOutcoming'],
                 unit_price = int(request.POST['quantityOutcoming']) * int(agregar.price)
         )
@@ -168,7 +226,7 @@ def consultarVenta(request, Nconsulta):
         return redirect('editar_producto')
 
 
-
+@login_required
 def editarVenta(request, Nconsulta):
     obtain = get_object_or_404(outcomingProducts, id = Nconsulta)
     edit = outcomingForm(instance=obtain)
@@ -182,3 +240,17 @@ def editarVenta(request, Nconsulta):
     else:
         form = outcomingForm(instance=obtain)
     return render(request, 'editarVentaH.html', {'edicion': edit, 'clave': Nconsulta}) 
+
+
+@login_required    
+def eliminarVenta(request, Nconsulta):
+    if request.method == 'POST':
+        obtain = get_object_or_404(outcomingProducts, id = Nconsulta)
+        obtain.delete()
+        return redirect('buscar_venta')
+    return redirect('buscar_venta')
+
+@login_required    
+def hacerInventario(request):
+    obtain = productsModel.objects.all()
+    return render(request, 'hacerInventarioH.html', {'lista': obtain})

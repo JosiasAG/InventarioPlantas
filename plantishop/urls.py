@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from inventario import views
+from django.contrib.auth import views as views_auth
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,9 +32,18 @@ urlpatterns = [
     path('agregar_producto/', views.agregarProducto, name='agregar_producto'),
     path('vender_producto/', views.venderProducto, name='vender_producto'),
     path('eliminar/<int:Nconsulta>', views.eliminarProducto, name='eliminar'),
-    #path('buscar_compra/', views.buscarVenta, name='buscar_compra'),
+    path('buscar_compra/', views.buscarCompra, name='buscar_compra'),
     path('buscar_venta/', views.buscarVenta, name='buscar_venta'),
+    path('consultar_compra/<int:Nconsulta>', views.consultarCompra, name='consultar_compra'),
     path('consultar_venta/<int:Nconsulta>', views.consultarVenta, name='consultar_venta'),
+    path('editar_compra/<int:Nconsulta>', views.editarCompra, name='editar_compra'),
     path('editar_venta/<int:Nconsulta>', views.editarVenta, name='editar_venta'),
+    path('eliminar_compra/<int:Nconsulta>', views.eliminarCompra, name='eliminar_compra'),
+    path('eliminar_venta/<int:Nconsulta>', views.eliminarVenta, name='eliminar_venta'),
+    path('hacer_inventario/', views.hacerInventario, name='hacer_inventario'),
+    path('recuperar_contrasena/', views_auth.PasswordResetView.as_view(template_name = 'recuperar_contrasenaH.html'), name='password_reset'),
+    path('enviar_email/', views_auth.PasswordResetDoneView.as_view(template_name = 'revisar_correoH.html'), name='password_reset_done'),
+    path('confirmar_email/<uidb64>/<token>', views_auth.PasswordResetConfirmView.as_view(template_name = 'cambiar_contrasenaH.html'), name='password_reset_confirm'),
+    path('cambiar_contraseña/', views_auth.PasswordResetCompleteView.as_view(template_name= 'correo_recuperadoH.html'), name='password_reset_complete'),
     
 ]

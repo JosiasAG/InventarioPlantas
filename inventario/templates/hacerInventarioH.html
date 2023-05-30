@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        {% block content %}
+        <h1>Inventariado mensual</h1>
+            <table>
+                <tr>
+                    <th>Código de producto</th>
+                    <th>Producto</th>
+                    <th>Categoría</th>
+                    <th>Cantidad en sistema</th>
+                    <th>Cantidad en físico</th>
+                    <th>Cantidades coinciden</th>
+                </tr>
+                <tr>
+                    <td>
+                        <ul id='ulinventario'>
+                            {% for producto in lista %}
+                                <li id='linventario'> {{producto.id}}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <ul id='ulinventario'>
+                            {% for producto in lista %}
+                                <li id='linventario'>{{producto.product}}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <ul id='ulinventario'>
+                            {% for producto in lista %}
+                                <li id='linventario'>{{producto.get_category_display}}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <ul id='ulinventario'>
+                            {% for producto in lista %}
+                                <li id='linventario'>{{producto.summatory}} pieza(s)</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <ul id='ulinventario'>
+                            {% for producto in lista %}
+                                <li id='linventario'><input type='number'></li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <ul id='ulinventario'>
+                            {% for producto in lista %}
+                                <li id='linventario'><input type='checkbox'></li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                
+            </table>
+        {% endblock content %}
+        
+        <script src="" async defer></script>
+    </body>
+</html>

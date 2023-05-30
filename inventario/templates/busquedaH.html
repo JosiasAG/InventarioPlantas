@@ -1,26 +1,30 @@
 {% extends 'base.html' %}
+{% load static %}
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        {% block content %}
-        <form action='/buscar/' method='POST'>
-            {{error}}
-            {% csrf_token %}
-            <input type='text' name='product'>
-            <button type='submit'>Buscar</button>
-        </form>
-        {% for productos in resultado %}
-            <a href={% url 'consultar' productos.id %}><li>{{productos.product}}</li></a>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Búsqueda de productos</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/estilosConsulta.css' %}">
+</head>
+<body id='bodybusqueda'>
+    {% block content %}
+    <form action="/buscar/" method="POST" class="search-form">
+        {{ error }}
+        {% csrf_token %}
+        <input type="text" name="product" placeholder="Ingrese el producto">
+        <button type="submit">Buscar</button>
+    </form>
+    <ul class="product-list">
+        {% for producto in resultado %}
+            <a href="{% url 'consultar' producto.id %}">
+                <li>{{ producto.product }}</li>
+            </a>
         {% endfor %}
-        
-        {% endblock content %}
-    </body>
+    </ul>
+    {% endblock content %}
+</body>
 </html>

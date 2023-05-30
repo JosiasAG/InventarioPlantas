@@ -15,7 +15,6 @@
         <form action='/vender_producto/' method='POST'>
             {{error}}
             {% csrf_token %}
-            <p>No. Factura: {{eliminar.bill}}</p>
             <p>Artículo: {{eliminar.code}}</p>
             <p>Cantidad: {{eliminar.quantityOutcoming}}</p>
 

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        {% block content %}
+        <form action='/buscar_compra/' method='POST'>
+            {{error}}
+            {% csrf_token %}
+            <input type='text' name='bill'>
+            <button type='submit'>Buscar compras proveedores</button>
+        </form>
+        {% for productos in resultado %}
+            <a href={% url 'consultar_compra' productos.id %}><li>{{productos.bill}}</li></a>
+        {% endfor %}
+        
+        {% endblock content %}
+    </body>
+</html>

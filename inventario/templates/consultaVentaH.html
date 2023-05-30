@@ -14,7 +14,7 @@
         {% include 'buscarVentaH.html' %}
         <h1>Detalle de venta</h1>
         <ul>
-            <li>No. Factura: {{consulta.bill}}</li>
+            <li>No. Factura: SDLP{{consulta.bill}}</li>
             <li>Fecha de compra: {{consulta.dateOutcoming}}</li>
             <li>Producto: {{consulta.code}}</li>
             <li>Cantidad vendida: {{consulta.quantityOutcoming}}</li>
@@ -26,7 +26,7 @@
                 Editar
             </button>
         </form>
-        <form action={% url 'eliminar' consulta.id %} method='POST'>
+        <form action={% url 'eliminar_venta' consulta.id %} method='POST'>
             {% csrf_token %}
             <button type='submit'>
                 Eliminar

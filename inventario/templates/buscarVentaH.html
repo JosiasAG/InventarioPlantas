@@ -18,7 +18,7 @@
             <button type='submit'>Buscar</button>
         </form>
         {% for productos in resultado %}
-            <a href={% url 'consultar_venta' productos.id %}><li>{{productos.bill}}</li></a>
+            <a href={% url 'consultar_venta' productos.id %}><li>SDLP{{productos.bill}}</li></a>
         {% endfor %}
         
         {% endblock content %}

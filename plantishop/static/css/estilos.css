@@ -1,0 +1,125 @@
+
+#formulario {
+    margin: 0 auto;
+    width: 500px;
+    background-color: #F0FFF0;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+#formulario input[type="text"],
+#formulario textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+#formulario button[type="submit"]:hover {
+    background-color: #7CFC00;
+}
+
+body {
+    background: linear-gradient(to right, #bea57c, #e4e3e2);
+}
+
+#logo {
+    position: relative;
+    margin-bottom: 0px;
+  }
+  
+#logo::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 500px;
+    z-index: 1;
+  }
+
+
+
+#image-container {
+    position: fixed;
+    bottom: -70;
+    right: 0;
+    width: 50%;
+    z-index: -10;
+  }
+
+
+#ulbase {
+    list-style-type: none;
+    margin-top: -70px;
+    padding: 0;
+    text-align: right; /* Centrar el texto */
+    border-bottom: 5px solid #333; /* Línea inferior */
+  }
+  
+#libase {
+    display: inline-block;
+    position: relative; /* Permite posicionar los elementos secundarios */
+  }
+  
+#abase {
+    display: block;
+    padding: 5px 30px;
+    color: #333; /* Letras oscuras */
+    text-decoration: none;
+    text-align: center; /* Centrar el texto */
+    font-family: 'Arial', sans-serif; /* Estilo de letra como de plantas */
+  }
+  
+  ul li ul {
+    text-align: center; /* Centrar el texto */
+    display: none; /* Ocultar inicialmente el menú desplegable */
+    position: absolute;
+    top: 130px; /* Alinear el menú desplegable debajo del elemento padre */
+    left: 50%; /* Centrar horizontalmente el menú desplegable */
+    transform: translateX(-50%); /* Ajustar la posición horizontal */
+    background-origin: linear-gradient(to right, #dbc5a1, #f7f2ec);
+    width: 200px;
+    list-style-type: none;
+    padding: 0;
+    border-bottom-left-radius: 10px; /* Esquina inferior izquierda redondeada */
+    border-bottom-right-radius: 10px; /* Esquina inferior derecha redondeada */
+  }
+  
+  ul li:hover ul {
+    display: block; /* Mostrar el menú desplegable al pasar el ratón */
+    background: linear-gradient(to right, #dbc5a1, #f7f2ec);
+  }
+
+
+  /*FORMULARIO*/
+  .form-group {
+    margin-bottom: 0px;
+    
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  input[type="number"] {
+    width: 96%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    
+  }

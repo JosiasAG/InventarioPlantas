@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,20 +8,58 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link type='text/css' href="{% static 'C:\Users\mirro\OneDrive\Escritorio\tiendaplantas\plantishop\static\css\estilos.css' %}" rel="stylesheet">
     </head>
     <body>
         {% block content %}
-        <h1>Añadir producto</h1>
-        <form action='/agregar_producto/' method='POST'>
+        <form action='/agregar_producto/' method='POST' id='formulario'>
             {% csrf_token %}
-            <p>No. Factura: {{agregar.bill}}</p>
-            <p>Articulo: {{agregar.code}}</p>
-            <p>Cantidad: {{agregar.quantityIncoming}}</p>
-            <p>Costo total: {{agregar.unit_price}}</p>
-        <button type='submit'>Registrar</button>
-        </form>
-
+            <div class="form-row">
+              <div class="form-group col">
+                <label for="supplier">Proveedor:</label>
+                <input type="text" id="supplier" name="supplier" placeholder="Ingrese el proveedor">
+              </div>
+              <div class="form-group col">
+                <label for="name">Nombre o razón social:</label>
+                <input type="text" id="name" name="name" placeholder="Ingrese el nombre o razón social">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col">
+                <label for="address">Dirección:</label>
+                <input type="text" id="address" name="address" placeholder="Ingrese la dirección">
+              </div>
+              <div class="form-group col">
+                <label for="telephone">Teléfono:</label>
+                <input type="tel" id="telephone" name="telephone" placeholder="Ingrese el teléfono">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col">
+                <label for="email">Correo electrónico:</label>
+                <input type="email" id="email" name="email" placeholder="Ingrese el correo electrónico">
+              </div>
+              <div class="form-group col">
+                <label for="bill">Factura:</label>
+                <input type="text" id="bill" name="bill" placeholder="Ingrese el número de factura">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="code">Artículo:</label>
+              <select name="code">
+                <option value={{agregar.code}}>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="quantity">Cantidad:</label>
+              <input type="number" id="quantity" name="quantityIncoming" placeholder="Ingrese la cantidad">
+            </div>
+            <div class="form-group">
+              <label for="unit_price">Costo total:</label>
+              <input type="number" id="unit_price" name="unit_price" placeholder="Ingrese el costo total">
+            </div>
+            <button type='submit'>Registrar</button>
+          </form>
         {% endblock content %}
     </body>
 </html>

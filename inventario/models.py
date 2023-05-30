@@ -39,7 +39,12 @@ class productsModel(models.Model):
 
 
 class incomingProducts(models.Model):
-    bill = models.CharField('No. factura compra' ,max_length=10)
+    supplier = models.CharField(("Proveedor"), max_length=100, default='')
+    name = models.CharField(("Nombre o razón social"), max_length=100, default='')
+    address = models.CharField(("Dirección"), max_length=100, default='')
+    telephone = models.CharField(("Teléfono"), max_length=15, default='')
+    email = models.EmailField(("Correo electrónico"), max_length=100, default='')
+    bill = models.CharField('No. factura compra' ,max_length=10, default='')
     dateIncoming = models.DateTimeField('Fecha ingreso' ,auto_now=False, auto_now_add=True)
     code = models.ForeignKey(productsModel, verbose_name=("Producto"), on_delete=models.CASCADE)
     quantityIncoming = models.IntegerField('Cantidad ingresada')
@@ -47,7 +52,7 @@ class incomingProducts(models.Model):
     
     
     def __str__(self):
-        return self.bill + ' - ' + str(self.dateIncoming)
+        return 'No. Factura: ' + self.bill + ' - ' + str(self.dateIncoming)
     
     
 
@@ -60,4 +65,4 @@ class outcomingProducts(models.Model):
         
     
     def __str__(self):
-        return self.bill + ' - ' + str(self.dateOutcoming)
+        return 'No. Factura: SDLP' + self.bill + ' - ' + str(self.dateOutcoming)

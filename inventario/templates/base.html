@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,39 +7,68 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link type='text/css' href="{% static 'css/estilos.css' %}" rel="stylesheet">
     </head>
     <body>
-        <ul>
-            <li>
-                <a href = '/'><p>Inicio</p></a>
+        <div>
+            <img id='logo' src="{% static 'images/Logo.png' %}" alt="La señora de las plantas">  
+        </div>
+        <div id="image-container" >
+            <img src="{% static 'images/planta2.png' %}" alt="planta fondo">  
+        </div>
+        
+        <ul id='ulbase'>
+            <li id='libase'>
+                <a id='abase' href="/"><p>Inicio</p></a>
             </li>
             {% if user.is_authenticated %}
-            
-            <li>
-                <a href = '/inventario/'><p>Registrar producto</p></a>
+            <li id='libase'>
+                <a id='abase'><p>Productos</p></a>
+                <ul id='ulbase'>
+                    <li>
+                        <a id='abase' href="/inventario/"><p>Registrar producto</p></a>
+                    </li>
+                    <li>
+                        <a id='abase' href="/buscar/"><p>Buscar producto</p></a>
+                    </li>
+                    <li>
+                        <a id='abase' href="/hacer_inventario/"><p>Realizar inventario</p></a>
+                    </li>
+                </ul>
             </li>
-            <li>
-                <a href = '/agregar_producto/'><p>Comprar producto</p></a>
+            <li id='libase'>
+                <a id='abase'><p>Compras</p></a>
+                <ul id='ulbase'>
+                    <li>
+                        <a id='abase' href="/agregar_producto/"><p>Comprar producto</p></a>
+                    </li>
+                    <li>
+                        <a id='abase' href="/buscar_compra/"><p>Buscar compra</p></a>
+                    </li>
+                </ul>
             </li>
-            <li>
-                <a href = '/vender_producto/'><p>Vender producto</p></a>
+            <li id='libase'>
+                <a id='abase'><p>Ventas</p></a>
+                <ul id='ulbase'>
+                    <li>
+                        <a id='abase' href="/vender_producto/"><p>Vender producto</p></a>
+                    </li>
+                    <li>
+                        <a id='abase' href="/buscar_venta/"><p>Buscar venta</p></a>
+                    </li>
+                </ul>
             </li>
-            <li>
-                <a href = '/buscar/'><p>Buscar</p></a>
-            </li>
-            <li>
-                <a href = '/salir/'><p>Salir</p></a>
+            <li id='libase'>
+                <a id='abase' href="/salir/"><p>Salir</p></a>
             </li>
             {% else %}
-            <li>
-                <a href = '/registro/'><p>Registrarse</p></a>
+            <li id='libase'>
+                <a id='abase' href="/registro/"><p>Registrarse</p></a>
             </li>
-            <li>
-                <a href = '/ingreso/'><p>Ingresar</p></a>
+            <li id='libase'>
+                <a id='abase' href="/ingreso/"><p>Ingresar</p></a>
             </li>
             {% endif %}
-            
         </ul>
         {% block content %}
         {% endblock content %}
